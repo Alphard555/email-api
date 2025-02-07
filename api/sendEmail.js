@@ -16,13 +16,17 @@ module.exports = async (req, res) => {
   console.log('Получены данные для отправки:', req.body);
 
   // Извлекаем поля
-  const { toEmail, subject, body } = req.body;
+  let { toEmail, subject, body } = req.body;
 
   // Проверяем, что все обязательные поля переданы
   if (!toEmail || !subject || !body) {
     console.log('Ошибка: Не все обязательные поля предоставлены');
     return res.status(400).json({ error: 'Все поля обязательны' });
   }
+
+  // Явное преобразование в строки, если они не строки
+  subject = String(subject);  // Преобразуем в строку
+  body = String(body);        // Преобразуем в строку
 
   // Структура данных для отправки
   const data = {
