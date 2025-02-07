@@ -9,20 +9,26 @@ const REGION = 'ru-central1';
 const SERVICE = 'ses';
 
 module.exports = async (req, res) => {
+  console.log('Запрос получен', req.method);
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Метод не поддерживается' });
   }
 
   const { toEmail, subject, body } = req.body;
 
+  console.log('Получены данные для отправки:', { toEmail, subject, body });
+
+  // Проверка обязательных полей
   if (!toEmail || !subject || !body) {
+    console.log('Ошибка: Не все обязательные поля предоставлены');
     return res.status(400).json({ error: 'Все поля обязательны' });
   }
 
   const data = {
     FromEmailAddress: 'no-reply@packmaster.tech',
     Destination: {
-      ToAddresses: [toEmail]
+      ToAddresses: [toEmail]  // Адрес получателя
     },
     Content: {
       Simple: {
@@ -39,6 +45,8 @@ module.exports = async (req, res) => {
       }
     }
   };
+
+  console.log('Тело запроса, которое отправляем в Postbox:', data);
 
   const endpoint = 'https://postbox.cloud.yandex.net/v2/email/outbound-emails';
 
@@ -59,6 +67,8 @@ module.exports = async (req, res) => {
     secretAccessKey: AWS_SECRET_KEY,
   });
 
+  console.log('Подписанный запрос:', opts);
+
   try {
     const response = await axios({
       method: opts.method,
@@ -67,9 +77,10 @@ module.exports = async (req, res) => {
       data: opts.body,
     });
 
+    console.log('Ответ от Postbox:', response.data);
     return res.status(200).json({ message: 'Письмо отправлено', data: response.data });
   } catch (error) {
-    console.error(error);
+    console.error('Ошибка при отправке письма:', error);
     return res.status(500).json({ error: 'Ошибка при отправке письма', details: error.message });
   }
 };
