@@ -33,12 +33,12 @@ module.exports = async (req, res) => {
     Content: {
       Simple: {
         Subject: {
-          Data: subject,
+          Data: subject,  // Убедитесь, что это строка
           Charset: 'UTF-8'
         },
         Body: {
           Text: {
-            Data: body,
+            Data: body,  // Убедитесь, что это строка
             Charset: 'UTF-8'
           }
         }
@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
     }
   };
 
-  console.log('Данные для отправки в API:', data);
+  console.log('Данные для отправки в API:', JSON.stringify(data, null, 2));
 
   const endpoint = 'https://postbox.cloud.yandex.net/v2/email/outbound-emails';
 
