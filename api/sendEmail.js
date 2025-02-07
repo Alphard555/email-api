@@ -2,7 +2,7 @@ const axios = require('axios');
 const aws4 = require('aws4');
 
 const API_KEY = process.env.API_KEY;  // Переменные окружения
-const AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+const SECRET_KEY = process.env.SECRET_KEY_10;
 const REGION = 'ru-central1';
 const SERVICE = 'ses';
 
@@ -68,7 +68,7 @@ module.exports = async (req, res) => {
   // Подписываем запрос
   aws4.sign(opts, {
     accessKeyId: API_KEY,
-    secretAccessKey: AWS_SECRET_KEY,
+    secretAccessKey: SECRET_KEY,
   });
 
   try {
