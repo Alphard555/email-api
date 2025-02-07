@@ -1,7 +1,7 @@
 const axios = require('axios');
 const aws4 = require('aws4');
 
-const AWS_KEY_ID = process.env.AWS_KEY_ID;  // Переменные окружения
+const API_KEY = process.env.API_KEY;  // Переменные окружения
 const AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
 const REGION = 'ru-central1';
 const SERVICE = 'ses';
