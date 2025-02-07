@@ -5,6 +5,9 @@ const API_KEY = process.env.API_KEY;  // Переменные окружения
 const SECRET_KEY = process.env.SECRET_KEY_10;
 const REGION = 'ru-central1';
 const SERVICE = 'ses';
+console.log('API_KEY:', process.env.API_KEY);
+console.log('SECRET_KEY_10:', process.env.SECRET_KEY_10);
+console.log('X-Amz-Date:', opts.headers['X-Amz-Date']);
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
@@ -70,7 +73,8 @@ module.exports = async (req, res) => {
     accessKeyId: API_KEY,
     secretAccessKey: SECRET_KEY,
   });
-
+  console.log('Authorization Header:', opts.headers.Authorization);
+  
   try {
     const response = await axios({
       method: opts.method,
