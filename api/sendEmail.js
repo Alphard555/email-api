@@ -67,7 +67,7 @@ module.exports = async (req, res) => {
 
   // Подписываем запрос
   aws4.sign(opts, {
-    accessKeyId: AWS_KEY_ID,
+    accessKeyId: API_KEY,
     secretAccessKey: AWS_SECRET_KEY,
   });
 
