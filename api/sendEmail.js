@@ -1,13 +1,12 @@
 const axios = require('axios');
 const aws4 = require('aws4');
 
-const API_KEY = process.env.API_KEY;  // Переменные окружения
+const API_KEY = process.env.API_KEY;
 const SECRET_KEY = process.env.SECRET_KEY_10;
 const REGION = 'ru-central1';
 const SERVICE = 'ses';
 console.log('API_KEY:', process.env.API_KEY);
 console.log('SECRET_KEY_10:', process.env.SECRET_KEY_10);
-console.log('X-Amz-Date:', opts.headers['X-Amz-Date']);
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
@@ -67,6 +66,7 @@ module.exports = async (req, res) => {
     body: JSON.stringify(data),
     headers: { 'Content-Type': 'application/json' }
   };
+  console.log('Request Options:', JSON.stringify(opts, null, 2));
 
   // Подписываем запрос
   aws4.sign(opts, {
